@@ -1,20 +1,22 @@
 server:
-  port:${PORT:8081}
+  port: 8082
 
 spring:
   application:
-    name: order-service
+    name: payment-service
 
   kafka:
     bootstrap-servers: localhost:9092
 
     consumer:
-      group-id: payment-group
+      group-id: payment-group-v2
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+        spring.json.value.default.type: com.smart_delivery_platform.payment_service.dto.OrderCreatedEvent
+        spring.json.use.type.headers: false
 
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
