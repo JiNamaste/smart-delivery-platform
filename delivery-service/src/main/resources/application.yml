@@ -1,0 +1,32 @@
+
+server:
+  port: 8084
+
+spring:
+  application:
+    name: delivery-service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    consumer:
+      group-id: delivery-group
+      auto-offset-reset: earliest
+
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: com.smart_delivery_platform.delivery_service.dto.RestaurantConfirmedEvent
+        spring.json.use.type.headers: false
+
+
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
