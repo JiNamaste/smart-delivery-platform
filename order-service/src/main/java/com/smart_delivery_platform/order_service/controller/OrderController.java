@@ -2,10 +2,7 @@ package com.smart_delivery_platform.order_service.controller;
 
 import com.smart_delivery_platform.order_service.dto.OrderCreatedEvent;
 import com.smart_delivery_platform.order_service.service.OrderProducer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -23,10 +20,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public String createOrder() {
-
-        OrderCreatedEvent event = new OrderCreatedEvent("ORD-101", "Ujjwal", 600.0);
-        orderProducer.publishOrderEvent(event);
+    public String createOrder(@RequestBody OrderCreatedEvent orderCreatedEvent) {
+        orderProducer.publishOrderEvent(orderCreatedEvent);
         return "Order Created Successfully";
     }
 }

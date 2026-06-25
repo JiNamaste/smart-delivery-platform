@@ -1,5 +1,6 @@
 package com.smart_delivery_platform.notification_service.service;
 
+import com.smart_delivery_platform.notification_service.dto.PaymentFailedEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -24,5 +25,10 @@ public class NotificationConsumer {
     @KafkaListener(topics = "delivery-assigned", groupId = "notification-group")
     public void deliveryAssigned(String event) {
         System.out.println("Notification: Delivery assigned -> " + event);
+    }
+
+    @KafkaListener(topics = "payment-failed", groupId = "notification-group")
+    public void paymentFailed(String event) {
+        System.out.println("Notification: Payment failed for order " + event);
     }
 }

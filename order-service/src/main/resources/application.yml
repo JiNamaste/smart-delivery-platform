@@ -18,9 +18,20 @@ spring:
         spring.json.value.default.type: com.smart_delivery_platform.order_service.dto.DeliveryAssignedEvent
         spring.json.use.type.headers: false
 
+
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/smart_delivery_order_db
+    username: postgres
+    password: 123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
 eureka:
   client:
