@@ -14,7 +14,7 @@ public class OrderService {
     }
 
     public void updateOrderStatus(String orderId, String status) {
-        OrderEntity order = orderRepository.findById(orderId)
+        OrderEntity order = orderRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         order.setStatus(status);
         order.setUpdatedAt(LocalDateTime.now());

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NotificationConsumer {
 
+
     @KafkaListener(topics = "order-created", groupId = "notification-group")
     public void orderCreated(String event) {
         System.out.println("Notification: Order created -> " + event);
@@ -30,5 +31,21 @@ public class NotificationConsumer {
     @KafkaListener(topics = "payment-failed", groupId = "notification-group")
     public void paymentFailed(String event) {
         System.out.println("Notification: Payment failed for order " + event);
+    }
+
+    @KafkaListener(topics = "restaurant-rejection", groupId = "notification-group")
+    public void restaurantRejection(String event) {
+        System.out.println("Notification: restaurant reject the order " + event);
+    }
+
+
+    @KafkaListener(topics = "payment-refund-success", groupId = "notification-group")
+    public void paymentRefundSuccess(String event) {
+        System.out.println("Notification: Payment Refunded " + event);
+    }
+
+    @KafkaListener(topics = "payment-refund-failure", groupId = "notification-group")
+    public void paymentRefundFailure(String event) {
+        System.out.println("Notification: Payment Refund Failed " + event);
     }
 }

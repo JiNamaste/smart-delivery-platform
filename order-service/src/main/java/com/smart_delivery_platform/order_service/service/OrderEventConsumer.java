@@ -2,6 +2,8 @@ package com.smart_delivery_platform.order_service.service;
 
 import com.smart_delivery_platform.order_service.dto.DeliveryAssignedEvent;
 import com.smart_delivery_platform.order_service.dto.PaymentFailedEvent;
+import com.smart_delivery_platform.order_service.dto.PaymentRefundedEvent;
+import com.smart_delivery_platform.order_service.dto.RestaurantRejectedEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,23 @@ public class OrderEventConsumer {
     )
     public void paymentFailed(PaymentFailedEvent event) {
         orderService.updateOrderStatus(event.getOrderId(), event.getStatus());
-        System.out.println("Order cancelled due to payment failure: " + event.getOrderId());
+    }
+
+    @KafkaListener(topics ="restaurant-rejection" , groupId = "order-group",
+            properties = "spring.json.value.default.type=com.smart_delivery_platform.order_service.dto.RestaurantRejectedEvent")
+    public void orderRejection(RestaurantRejectedEvent event){
+        orderService.updateOrderStatus(event.getOrderId(), event.getStatus());
+    }
+
+    @KafkaListener(topics = "payment-refund-success" , groupId = "order-group",
+            properties = "spring.json.value.default.type=com.smart_delivery_platform.order_service.dto.RestaurantRejectedEvent")
+    public void paymentRefundSuccess(PaymentRefundedEvent event){
+        orderService.updateOrderStatus(event.getOrderId(), event.getStatus());
+    }
+
+    @KafkaListener(topics = "payment-refund-success" , groupId = "order-group",
+            properties = "spring.json.value.default.type=com.smart_delivery_platform.order_service.dto.RestaurantRejectedEvent")
+    public void paymentRefundFailure(PaymentRefundedEvent event){
+        orderService.updateOrderStatus(event.getOrderId(), event.getStatus());
     }
 }
