@@ -44,3 +44,12 @@ eureka:
     prefer-ip-address: true
     hostname: localhost
     instance-id: ${spring.application.name}:${server.port}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      restaurantService:
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 3
+        sliding-window-size: 5
+        wait-duration-in-open-state: 10s

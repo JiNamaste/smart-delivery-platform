@@ -16,6 +16,7 @@ public class OrderProducer {
 
     private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
     private final OrderRepository orderRepository;
+    private final RestaurantAvailabilityService restaurantAvailabilityService;
 
     public void publishOrderEvent(OrderCreatedEvent event) {
         if (event == null || event.getOrderId() == null) {
@@ -28,6 +29,13 @@ public class OrderProducer {
                 .createdAt(LocalDateTime.now())
                 .status("created")
                 .build();
+
+        String response = restaurantAvailabilityService.checkRestaurant("REST-101");
+        if(response.equals("RESTAURANT_SERVICE_DOWN")){
+            order.setStatus("PENDING_RETRY");
+            orderRepository.save(order);
+            //return "Restaurant Service Down";
+        }
 
         orderRepository.save(order);
         kafkaTemplate.send("order-created", event);
