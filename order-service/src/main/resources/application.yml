@@ -10,7 +10,7 @@ spring:
 
     consumer:
       group-id: order-group
-      auto-offset-reset: earliest
+      auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
@@ -53,3 +53,11 @@ resilience4j:
         minimum-number-of-calls: 3
         sliding-window-size: 5
         wait-duration-in-open-state: 10s
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha

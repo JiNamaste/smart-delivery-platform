@@ -13,4 +13,5 @@ public class PaymentRefundedEvent {
     private String orderId;
     private double refundAmount;
     private String status;
+    private String paymentId;
 }

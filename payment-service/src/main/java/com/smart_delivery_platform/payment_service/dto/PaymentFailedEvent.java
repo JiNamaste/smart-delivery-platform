@@ -12,4 +12,6 @@ public class PaymentFailedEvent {
     private String orderId;
     private String reason;
     private String status;
+    private Double amount;
+    private String paymentId;
 }

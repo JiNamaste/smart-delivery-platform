@@ -14,4 +14,5 @@ public class RestaurantRejectedEvent {
     private String reason;
     private String status;
     private Double amount;
+    private String paymentId;
 }

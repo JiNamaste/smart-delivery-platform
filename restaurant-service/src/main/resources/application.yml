@@ -25,7 +25,20 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/smart_delivery_restaurant_service
+    username: postgres
+    password: 123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+app:
+  event-delay-ms: 3000

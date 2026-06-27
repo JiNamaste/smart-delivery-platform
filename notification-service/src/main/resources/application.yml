@@ -2,6 +2,9 @@ server:
   port: 8086
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
+
   application:
     name: notification-service
 
@@ -13,6 +16,21 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_APP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+notification:
+  to-email: ${NOTIFICATION_TO_EMAIL:}
 
 eureka:
   client:

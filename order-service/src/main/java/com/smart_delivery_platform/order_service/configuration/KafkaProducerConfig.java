@@ -1,6 +1,5 @@
 package com.smart_delivery_platform.order_service.configuration;
 
-import com.smart_delivery_platform.order_service.dto.OrderCreatedEvent;
 import org.springframework.boot.kafka.autoconfigure.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,13 +11,12 @@ import org.springframework.kafka.core.ProducerFactory;
 public class KafkaProducerConfig {
 
     @Bean
-    public ProducerFactory<String, OrderCreatedEvent> orderCreatedEventProducerFactory(KafkaProperties kafkaProperties) {
+    public ProducerFactory<String, Object> producerFactory(KafkaProperties kafkaProperties) {
         return new DefaultKafkaProducerFactory<>(kafkaProperties.buildProducerProperties());
     }
 
     @Bean
-    public KafkaTemplate<String, OrderCreatedEvent> orderCreatedEventKafkaTemplate(
-            ProducerFactory<String, OrderCreatedEvent> orderCreatedEventProducerFactory) {
-        return new KafkaTemplate<>(orderCreatedEventProducerFactory);
+    public KafkaTemplate<String, Object> kafkaTemplate(ProducerFactory<String, Object> producerFactory) {
+        return new KafkaTemplate<>(producerFactory);
     }
 }

@@ -17,7 +17,26 @@ spring:
               uri: lb://ORDER-SERVICE
               predicates:
                 - Path=/api/orders,/api/orders/**
-
+            - id: order-service-docs
+              uri: lb://ORDER-SERVICE
+              predicates:
+                - Path=/order-service/v3/api-docs
+              filters:
+                - StripPrefix=1
+            - id: tracking-service
+              uri: lb://TRACKING-SERVICE
+              predicates:
+                  - Path=/api/tracking/**
+            - id: payment-service
+              uri: lb://PAYMENT-SERVICE
+              predicates:
+                  - Path=/api/payments/**
+            - id: payment-service-docs
+              uri: lb://PAYMENT-SERVICE
+              predicates:
+                  - Path=/payment-service/v3/api-docs
+              filters:
+                  - StripPrefix=1
 eureka:
   client:
     register-with-eureka: true
@@ -29,3 +48,14 @@ eureka:
     prefer-ip-address: true
     hostname: localhost
     instance-id: ${spring.application.name}:${server.port}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Order Service
+        url: /order-service/v3/api-docs
+      - name: Payment Service
+        url: /payment-service/v3/api-docs
+    operations-sorter: method
+    tags-sorter: alpha

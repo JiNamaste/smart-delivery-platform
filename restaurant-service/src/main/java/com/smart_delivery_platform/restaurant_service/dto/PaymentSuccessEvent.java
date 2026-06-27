@@ -13,4 +13,5 @@ public class PaymentSuccessEvent {
     private String paymentId;
     private Double amount;
     private String status;
+    private String restaurantId;
 }
